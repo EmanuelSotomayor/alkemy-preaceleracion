@@ -1,5 +1,7 @@
 package com.alkemy.preaceleracion.enumeration;
 
-public enum EnumExample {
-
+public enum GenreType {
+	MALE,
+	FEMALE,
+	OTHER
 }
