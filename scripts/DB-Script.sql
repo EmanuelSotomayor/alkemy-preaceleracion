@@ -21,7 +21,7 @@ CREATE TABLE `movies_series`(
 
 CREATE TABLE `genres`(
 	`id` BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(45) NOT NULL,
+    `name` ENUM("MALE", "FEMALE", "OTHER") NOT NULL,
     `image` VARCHAR(255) NOT NULL
 );
 
