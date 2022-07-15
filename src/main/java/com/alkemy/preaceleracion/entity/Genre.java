@@ -1,5 +1,7 @@
 package com.alkemy.preaceleracion.entity;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.alkemy.preaceleracion.enumeration.GenreType;
 
@@ -23,6 +26,8 @@ public class Genre {
 	private GenreType genreType;
 	@Column(name = "image", length = 255, nullable = false)
 	private String imgUrl;
+	@ManyToMany(mappedBy = "genres", cascade = CascadeType.ALL)
+	private List<MovieSerie> moviesSeries;
 	
 	//Empty constructor
 	public Genre(){}
