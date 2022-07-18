@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "movies_series")
@@ -36,18 +37,13 @@ public class MovieSerie {
 	@Column(name = "image", length = 255, nullable = false)
 	private String imgUrl;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "movies_series_genres",
-			joinColumns = @JoinColumn(name = "id_movie_serie"),
-			inverseJoinColumns = @JoinColumn(name = "id_genre")
-	)
+	@JoinTable(name = "movies_series_genres", joinColumns = @JoinColumn(name = "id_movie_serie"),
+	inverseJoinColumns = @JoinColumn(name = "id_genre"))
 	private List<Genre> genres;
+	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "movies_series_characters",
-			joinColumns = @JoinColumn(name = "id_movie_serie"),
-			inverseJoinColumns = @JoinColumn(name = "id_character")
-	)
+	@JoinTable(name = "movies_series_characters", joinColumns = @JoinColumn(name = "id_movie_serie"),
+	inverseJoinColumns = @JoinColumn(name = "id_character"))
 	private List<Character> characters;
 
 	// Empty constructor

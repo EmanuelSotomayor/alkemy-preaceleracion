@@ -4,11 +4,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "characters")
@@ -28,7 +31,8 @@ public class Character {
 	private String history;
 	@Column(name = "image")
 	private String imageUrl;
-	@ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
+	@JsonBackReference
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "characters")
 	private List<MovieSerie> moviesSeries;
 
 	// Empty Constructor
@@ -93,10 +97,18 @@ public class Character {
 		this.imageUrl = imageUrl;
 	}
 
+	public List<MovieSerie> getMoviesSeries() {
+		return moviesSeries;
+	}
+
+	public void setMoviesSeries(List<MovieSerie> moviesSeries) {
+		this.moviesSeries = moviesSeries;
+	}
+	
 	// toString()
 	@Override
 	public String toString() {
 		return "Character [id=" + id + ", name=" + name + ", age=" + age + ", weight=" + weight + ", history=" + history
-				+ ", imageUrl=" + imageUrl + "]";
+				+ ", imageUrl=" + imageUrl + ", moviesSeries=" + moviesSeries + "]";
 	}
 }

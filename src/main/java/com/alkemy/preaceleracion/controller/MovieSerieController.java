@@ -2,6 +2,7 @@ package com.alkemy.preaceleracion.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alkemy.preaceleracion.entity.Genre;
 import com.alkemy.preaceleracion.entity.Character;
@@ -70,6 +72,21 @@ public class MovieSerieController {
 	@GetMapping
 	public ResponseEntity<List<MovieSerie>> getAllMoviesSeries(){
 		return ResponseEntity.status(HttpStatus.FOUND).body(movieSerieService.getAllMoviesSeries());
+	}
+	
+	@GetMapping(params = "genre")
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByIdGenre(@RequestParam Long genre){
+		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesFilterByIdGenre(genre));
+	}
+	
+	@GetMapping(params = "order")
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesSortFilter(@RequestParam String order){
+		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesSortFilter(order));
+	}
+	
+	@GetMapping(params = "name")
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByName(@RequestParam String name){
+		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesFilterByName(name));
 	}
 	
 }

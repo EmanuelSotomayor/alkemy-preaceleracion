@@ -35,7 +35,7 @@ public class GenreServiceImpl implements GenreService{
 	public Genre updateGenreById(Long id, Genre genre) {
 		Optional<Genre> genreIsPresent = genreRepository.findById(id);
 		genreIsPresent.orElseThrow(()-> new GenreException("Genre doesn't exists"));
-		genreIsPresent.get().setGenreType(genre.getGenreType());
+		genreIsPresent.get().setgenreName(genre.getgenreName());
 		genreIsPresent.get().setImgUrl(genre.getImgUrl());
 		return genreRepository.save(genreIsPresent.get());
 	}

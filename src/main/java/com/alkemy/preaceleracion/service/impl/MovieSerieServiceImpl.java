@@ -22,8 +22,10 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 
 	@Autowired
 	private MovieSerieRepository movieSerieRepository;
+	
 	@Autowired
 	private GenreRepository genreRepository;
+	
 	@Autowired
 	private CharacterRepository characterRepository;
 	
@@ -139,4 +141,26 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 		movieSerieRepository.save(movieSerieIsPresent.get());
 	}
 
+	@Override
+	public List<MovieSerie> getMovieSeriesFilterByIdGenre(Long genre) {
+		Optional<Genre> genreIsPresent = genreRepository.findById(genre);
+		genreIsPresent.orElseThrow(()-> new GenreException("Genre isn't exists"));
+		return movieSerieRepository.getMovieSeriesFilterByIdGenre(genre);
+	}
+
+	@Override
+	public List<MovieSerie> getMovieSeriesSortFilter(String order) {
+		if(order.equals("ASC")){
+			return movieSerieRepository.getMovieSeriesASCSort();
+		}if(order.equals("DESC")){
+			return movieSerieRepository.getMovieSeriesDESCSort();
+		}
+		return null;
+	}
+
+	@Override
+	public List<MovieSerie> getMovieSeriesFilterByName(String name) {
+		return movieSerieRepository.getMovieSeriesFilterByName(name);
+	}
+	
 }

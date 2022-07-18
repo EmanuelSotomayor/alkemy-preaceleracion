@@ -2,11 +2,14 @@ package com.alkemy.preaceleracion.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alkemy.preaceleracion.entity.Character;
+import com.alkemy.preaceleracion.entity.MovieSerie;
 import com.alkemy.preaceleracion.exception.CharacterException;
 import com.alkemy.preaceleracion.repository.CharacterRepository;
 import com.alkemy.preaceleracion.service.CharacterService;
@@ -58,4 +61,30 @@ public class CharacterServiceImpl implements CharacterService{
 		return characterRepository.findAll();
 	}
 
+	@Override
+	public Character getCharacterFilterByName(String name) {
+		Optional<Character> characterIsPresent = characterRepository.getCharacterFilterByName(name);
+		return characterIsPresent.orElseThrow(()-> new CharacterException(name + " doesn't exists"));
+	}
+
+	@Override
+	public List<Character> getCharactersFilterByAge(Integer age) {
+		return characterRepository.getCharactersFilterByAge(age);
+	}
+
+	@Override
+	public List<Character> getCharactersFilterByWeight(Float weight) {
+		return characterRepository.getCharactersFilterByWeight(weight);
+	}
+
+	@Override
+	public List<MovieSerie> getCharacterMoviesById(Long id) {
+		Optional<Character> characterIsPresent = characterRepository.findById(id); 
+		characterIsPresent.orElseThrow(()-> new CharacterException(id + " doesn't exists"));
+		return characterIsPresent.get().getMoviesSeries()
+		.stream().filter(m -> m.getTitle() != null)
+		.map(i -> new MovieSerie(i.getId(), i.getTitle(), i.getCreationDate(), i.getCalification(), i.getImgUrl()))
+		.collect(Collectors.toList());
+	}
+	
 }

@@ -4,14 +4,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import com.alkemy.preaceleracion.enumeration.GenreType;
 
 @Entity
 @Table(name = "genres")
@@ -21,21 +19,20 @@ public class Genre {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "name", columnDefinition = "ENUM('MALE', 'FEMALE', 'OTHER')" ,nullable = false)
-	@Enumerated(EnumType.STRING)
-	private GenreType genreType;
+	@Column(name = "name", length = 100, nullable = false)
+	private String genreName;
 	@Column(name = "image", length = 255, nullable = false)
 	private String imgUrl;
-	@ManyToMany(mappedBy = "genres", cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "genres")
 	private List<MovieSerie> moviesSeries;
 	
 	//Empty constructor
 	public Genre(){}
 	
 	//Parametized constructor
-	public Genre(Long id, GenreType genreType, String imgUrl){
+	public Genre(Long id, String genreName, String imgUrl){
 		this.id = id;
-		this.genreType = genreType;
+		this.genreName = genreName;
 		this.imgUrl = imgUrl;
 	}
 	
@@ -48,12 +45,12 @@ public class Genre {
 		this.id = id;
 	}
 
-	public GenreType getGenreType() {
-		return genreType;
+	public String getgenreName() {
+		return genreName;
 	}
 
-	public void setGenreType(GenreType genreType) {
-		this.genreType = genreType;
+	public void setgenreName(String genreName) {
+		this.genreName = genreName;
 	}
 
 	public String getImgUrl() {
@@ -67,7 +64,7 @@ public class Genre {
 	//toString()
 	@Override
 	public String toString() {
-		return "Genre [id=" + id + ", genreType=" + genreType + ", imgUrl=" + imgUrl + "]";
+		return "Genre [id=" + id + ", genreName=" + genreName + ", imgUrl=" + imgUrl + "]";
 	}
 	
 }
