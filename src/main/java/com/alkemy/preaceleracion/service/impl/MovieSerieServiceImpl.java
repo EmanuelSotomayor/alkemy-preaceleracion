@@ -3,6 +3,8 @@ package com.alkemy.preaceleracion.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +71,7 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 		return movieSerieRepository.findAll();
 	}
 	
-	private Boolean checkIfGenresExists(List<Genre> genres){
+	private Boolean checkIfGenresExists(Set<Genre> genres){
 		List<Long> idGenres = new ArrayList<>();
 		for(Genre g: genres){
 			Optional<Genre> actualId = genreRepository.findById(g.getId());
@@ -81,7 +83,7 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 		return idGenres != null;
 	}
 	
-	private Boolean checkIfCharactersExists(List<Character> characters){
+	private Boolean checkIfCharactersExists(Set<Character> characters){
 		List<Long> idCharacters = new ArrayList<>();
 			for(Character c: characters){
 				Optional<Character> actualId = characterRepository.findById(c.getId());
@@ -100,7 +102,7 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 	}
 	
 	@Override
-	public MovieSerie addGenres(Long id, List<Genre> genres) {
+	public MovieSerie addGenres(Long id, Set<Genre> genres) {
 		Optional<MovieSerie> movieSerieIsPresent = movieSerieRepository.findById(id);
 		movieSerieIsPresent.orElseThrow(()-> new MovieSerieException("Movie or serie doesn't exists"));
 		if(checkIfGenresExists(genres)){
@@ -114,7 +116,7 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 	}
 
 	@Override
-	public MovieSerie addCharacters(Long id, List<Character> characters) {
+	public MovieSerie addCharacters(Long id, Set<Character> characters) {
 		Optional<MovieSerie> movieSerieIsPresent = movieSerieRepository.findById(id);
 		movieSerieIsPresent.orElseThrow(()-> new MovieSerieException("Movie or serie doesn't exists"));
 		if(checkIfCharactersExists(characters)){
@@ -137,7 +139,7 @@ public class MovieSerieServiceImpl implements MovieSerieService{
 	public void deleteCharacter(Long idMovie, Long idCharacter) {
 		Optional<MovieSerie> movieSerieIsPresent = movieSerieRepository.findById(idMovie);
 		movieSerieIsPresent.orElseThrow(()-> new MovieSerieException("Movie or serie doesn't exists"));
-		movieSerieIsPresent.get().deleteCharacter(checkIfCharacterExists(idCharacter));
+		movieSerieIsPresent.get().removeCharacter(checkIfCharacterExists(idCharacter));
 		movieSerieRepository.save(movieSerieIsPresent.get());
 	}
 

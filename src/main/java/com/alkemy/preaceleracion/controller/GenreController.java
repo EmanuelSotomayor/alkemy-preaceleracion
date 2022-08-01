@@ -1,6 +1,9 @@
 package com.alkemy.preaceleracion.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,23 +26,23 @@ public class GenreController {
 	private GenreService genreService;
 	
 	@PostMapping
-	public ResponseEntity<Genre> saveGenre(@RequestBody Genre genre){
+	public ResponseEntity<Genre> saveGenre(@Valid @RequestBody Genre genre){
 		return ResponseEntity.status(HttpStatus.CREATED).body(genreService.saveGenre(genre));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Genre> updateGenreById(@PathVariable Long id, @RequestBody Genre genre){
+	public ResponseEntity<Genre> updateGenreById(@Valid @PathVariable Long id, @Valid @RequestBody Genre genre){
 		return ResponseEntity.status(HttpStatus.OK).body(genreService.updateGenreById(id, genre));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteGenreById(@PathVariable Long id){
+	public ResponseEntity<?> deleteGenreById(@Valid @PathVariable Long id){
 		genreService.deleteGenreById(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Genre> getGenreById(@PathVariable Long id){
+	public ResponseEntity<Genre> getGenreById(@Valid @PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.FOUND).body(genreService.getGenreById(id));
 	}
 	

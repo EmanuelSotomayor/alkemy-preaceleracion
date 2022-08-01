@@ -2,6 +2,8 @@ package com.alkemy.preaceleracion.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,23 +28,23 @@ public class CharacterController {
 	private CharacterService characterService;
 	
 	@PostMapping
-	public ResponseEntity<Character> saveCharacter(@RequestBody Character character){
+	public ResponseEntity<Character> saveCharacter(@Valid @RequestBody Character character){
 		return ResponseEntity.status(HttpStatus.CREATED).body(characterService.saveCharacter(character));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Character> updateCharacterById(@PathVariable Long id, @RequestBody Character character){
+	public ResponseEntity<Character> updateCharacterById(@Valid @PathVariable Long id, @Valid @RequestBody Character character){
 		return ResponseEntity.status(HttpStatus.OK).body(characterService.updateCharacterById(id, character));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteCharacterById(@PathVariable Long id){
+	public ResponseEntity<?> deleteCharacterById(@Valid @PathVariable Long id){
 		characterService.deleteCharacterById(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Character> getCharacterById(@PathVariable Long id){
+	public ResponseEntity<Character> getCharacterById(@Valid @PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.FOUND).body(characterService.getCharacterById(id));
 	}
 	
@@ -56,22 +58,22 @@ public class CharacterController {
 	entre endpoints, porque quedaría /characters y ese ya existe en el @RequestMapping*/
 	//Al final queda: http://localhost:8080/characters?name=valor
 	@GetMapping(params = "name")
-	public ResponseEntity<Character> getCharacterFilterByName(@RequestParam String name){
+	public ResponseEntity<Character> getCharacterFilterByName(@Valid @RequestParam String name){
 		return ResponseEntity.status(HttpStatus.FOUND).body(characterService.getCharacterFilterByName(name));
 	}
 	
 	@GetMapping(params = "age")
-	public ResponseEntity<List<Character>> getCharactersFilterByAge(@RequestParam Integer age){
+	public ResponseEntity<List<Character>> getCharactersFilterByAge(@Valid @RequestParam Integer age){
 		return ResponseEntity.status(HttpStatus.FOUND).body(characterService.getCharactersFilterByAge(age));
 	}
 	
 	@GetMapping(params = "weight")
-	public ResponseEntity<List<Character>> getCharactersFilterByWeight(@RequestParam Float weight){
+	public ResponseEntity<List<Character>> getCharactersFilterByWeight(@Valid @RequestParam Float weight){
 		return ResponseEntity.status(HttpStatus.FOUND).body(characterService.getCharactersFilterByWeight(weight));
 	}
 	
 	@GetMapping("/{id}/movies")
-	public ResponseEntity<List<MovieSerie>> getCharacterMoviesById(@PathVariable Long id){
+	public ResponseEntity<List<MovieSerie>> getCharacterMoviesById(@Valid @PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(characterService.getCharacterMoviesById(id));
 	}
 	
