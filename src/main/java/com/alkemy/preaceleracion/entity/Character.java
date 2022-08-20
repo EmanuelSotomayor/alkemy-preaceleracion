@@ -13,6 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "characters")
 public class Character {
@@ -35,7 +40,7 @@ public class Character {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "characters")
 	private List<MovieSerie> moviesSeries;
 
-	// Empty Constructor
+	//Empty Constructor
 	public Character() {}
 
 	// Parametized constructor
