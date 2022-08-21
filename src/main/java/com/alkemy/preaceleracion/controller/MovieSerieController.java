@@ -1,11 +1,8 @@
 package com.alkemy.preaceleracion.controller;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,45 +27,45 @@ public class MovieSerieController {
 	private MovieSerieService movieSerieService;
 	
 	@PostMapping
-	public ResponseEntity<MovieSerie> saveMovieSerie(@Valid @RequestBody MovieSerie movieSerie){
+	public ResponseEntity<MovieSerie> saveMovieSerie(@RequestBody MovieSerie movieSerie){
 		return ResponseEntity.status(HttpStatus.CREATED).body(movieSerieService.saveMovieSerie(movieSerie));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<MovieSerie> updateMovieSerieById(@Valid @PathVariable Long id, @Valid @RequestBody MovieSerie movieSerie){
+	public ResponseEntity<MovieSerie> updateMovieSerieById(@PathVariable Long id, @RequestBody MovieSerie movieSerie){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.updateMovieSerieById(id, movieSerie));
 	}
 	
 	@PutMapping("/{id}/addgenres")
-	public ResponseEntity<MovieSerie> addGenres(@Valid @PathVariable Long id, @Valid @RequestBody Set<Genre> genres){
+	public ResponseEntity<MovieSerie> addGenres(@PathVariable Long id, @RequestBody List<Genre> genres){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.addGenres(id, genres));
 	}
 	
 	@PutMapping("/{id}/addcharacters")
-	public ResponseEntity<MovieSerie> addCharacters(@Valid @PathVariable Long id, @Valid @RequestBody Set<Character> characters){
+	public ResponseEntity<MovieSerie> addCharacters(@PathVariable Long id, @RequestBody List<Character> characters){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.addCharacters(id, characters));
 	}
 	
 	@PutMapping("/{idMovie}/characters/{idCharacter}")
-	public ResponseEntity<?> addCharacter(@Valid @PathVariable(name = "idMovie") Long idMovie, @Valid @PathVariable(name = "idCharacter") Long idCharacter){
+	public ResponseEntity<?> addCharacter(@PathVariable(name = "idMovie") Long idMovie, @PathVariable(name = "idCharacter") Long idCharacter){
 		movieSerieService.addCharacter(idMovie, idCharacter);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteMovieSerieById(@Valid @PathVariable Long id){
+	public ResponseEntity<?> deleteMovieSerieById(@PathVariable Long id){
 		movieSerieService.deleteMovieSerieById(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@DeleteMapping("/{idMovie}/characters/{idCharacter}")
-	public ResponseEntity<?> deleteCharacterOfMovie(@Valid @PathVariable(name = "idMovie") Long idMovie, @Valid @PathVariable(name = "idCharacter") Long idCharacter){
+	public ResponseEntity<?> deleteCharacterOfMovie(@PathVariable(name = "idMovie") Long idMovie, @PathVariable(name = "idCharacter") Long idCharacter){
 		movieSerieService.deleteCharacter(idMovie, idCharacter);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<MovieSerie> getMovieSerieById(@Valid @PathVariable Long id){
+	public ResponseEntity<MovieSerie> getMovieSerieById(@PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.FOUND).body(movieSerieService.getMovieSerieById(id));
 	}
 	
@@ -78,17 +75,17 @@ public class MovieSerieController {
 	}
 	
 	@GetMapping(params = "genre")
-	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByIdGenre(@Valid @RequestParam Long genre){
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByIdGenre(@RequestParam Long genre){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesFilterByIdGenre(genre));
 	}
 	
 	@GetMapping(params = "order")
-	public ResponseEntity<List<MovieSerie>> getMovieSeriesSortFilter(@Valid @RequestParam String order){
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesSortFilter(@RequestParam String order){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesSortFilter(order));
 	}
 	
 	@GetMapping(params = "name")
-	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByName(@Valid @RequestParam String name){
+	public ResponseEntity<List<MovieSerie>> getMovieSeriesFilterByName(@RequestParam String name){
 		return ResponseEntity.status(HttpStatus.OK).body(movieSerieService.getMovieSeriesFilterByName(name));
 	}
 	

@@ -1,7 +1,9 @@
 package com.alkemy.preaceleracion.service;
 
 import java.util.List;
-import java.util.Set;
+
+import org.springframework.data.repository.query.Param;
+
 import com.alkemy.preaceleracion.entity.Genre;
 import com.alkemy.preaceleracion.entity.Character;
 import com.alkemy.preaceleracion.entity.MovieSerie;
@@ -12,8 +14,8 @@ public interface MovieSerieService {
 	public MovieSerie updateMovieSerieById(Long id, MovieSerie movieSerie);
 	public MovieSerie getMovieSerieById(Long id);
 	public List<MovieSerie> getAllMoviesSeries();
-	public MovieSerie addGenres(Long id, Set<Genre> genres);
-	public MovieSerie addCharacters(Long id, Set<Character> character);
+	public MovieSerie addGenres(Long id, List<Genre> genres);
+	public MovieSerie addCharacters(Long id, List<Character> character);
 	public void addCharacter(Long idMovie, Long idCharacter);
 	public void deleteCharacter(Long idMovie, Long idCharacter);
 	public List<MovieSerie> getMovieSeriesFilterByIdGenre(Long idGenre);
